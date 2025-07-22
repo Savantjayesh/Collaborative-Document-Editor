@@ -1,0 +1,43 @@
+{% extends 'editor/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold">Your Documents</h2>
+        <div>
+            <a href="{% url 'create_document' %}" class="bg-green-600 text-white px-4 py-2 rounded mr-2 hover:bg-green-700">+ New</a>
+            <a href="{% url 'upload_document' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">↑ Upload</a>
+        </div>
+    </div>
+
+    <form method="get" class="mb-4 flex flex-wrap gap-2">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search..." class="border px-3 py-2 rounded w-60">
+        <select name="sort" class="border px-2 py-2 rounded">
+            <option value="-last_updated" {% if sort == '-last_updated' %}selected{% endif %}>Recent</option>
+            <option value="title" {% if sort == 'title' %}selected{% endif %}>Title A-Z</option>
+        </select>
+        <button type="submit" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900">Filter</button>
+    </form>
+
+    {% if documents %}
+        <ul class="divide-y divide-gray-300 bg-white rounded shadow-md">
+            {% for doc in documents %}
+                <li class="p-4 flex justify-between items-center">
+                    <div>
+                        <p class="font-medium">{{ doc.title }}</p>
+                        <p class="text-sm text-gray-500">Last updated: {{ doc.last_updated|date:"M d, Y H:i" }}</p>
+                    </div>
+                    <div class="space-x-2">
+                        <a href="{% url 'editor' doc.id %}" class="text-blue-600 hover:underline">Edit</a>
+                        <a href="{% url 'versions' doc.id %}" class="text-gray-600 hover:underline">Versions</a>
+                        <a href="{% url 'share_document' doc.id %}" class="text-purple-600 hover:underline">Share</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500 mt-6">You haven't created or uploaded any documents yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'editor/base.html' %}
+
+{% block title %}Share Document{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white shadow p-6 rounded">
+    <h2 class="text-2xl font-semibold mb-4">Share: <span class="text-blue-700">{{ doc.title }}</span></h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit"
+                class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded mt-4">
+            Share
+        </button>
+    </form>
+
+    <p class="text-sm text-gray-500 mt-4">
+        Shared users can edit the document in real-time.
+    </p>
+</div>
+{% endblock %}

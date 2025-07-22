@@ -1,0 +1,31 @@
+{% extends 'editor/base.html' %}
+
+{% block title %}Version History{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white shadow-md p-6 rounded">
+    <h2 class="text-2xl font-semibold mb-4">Version History for "{{ versions.0.document.title }}"</h2>
+
+    {% if versions %}
+        <ul class="divide-y divide-gray-300">
+            {% for version in versions %}
+                <li class="py-4 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-700">Saved on: {{ version.edited_at|date:"M d, Y H:i:s" }}</p>
+                    </div>
+                    <form method="post" action="{% url 'revert_version' version.document.id version.id %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                                onclick="return confirm('Are you sure you want to revert to this version?');">
+                            Revert
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500">No version history available for this document yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
