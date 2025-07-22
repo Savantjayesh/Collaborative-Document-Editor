@@ -49,31 +49,31 @@ collab_editor/
 
 **Steps For Run :**
 
-**Setup Virtual Environment**
+1️⃣**Setup Virtual Environment**
     python -m venv env
     env\Scripts\activate       # For Windows
 
     source env/bin/activate    # For Mac/Linux
 
-**Install Dependencies**
+2️⃣**Install Dependencies**
      pip install -r requirements.txt
      
-**Configure .env**
+3️⃣**Configure .env**
     SECRET_KEY=your-django-secret-key
     DEBUG=True
     OPENAI_API_KEY=your-openai-api-key
 
-**Database Migration & Superuser**
+4️⃣**Database Migration & Superuser**
     python manage.py makemigrations
     python manage.py migrate
     python manage.py createsuperuser
 
-**Running the Server**
+5️⃣**Running the Server**
     **Standard Django (No WebSocket)**
         python manage.py runserver
         
-**With WebSocket Support (Recommended)**
-    uvicorn collab_editor.asgi:application --host 127.0.0.1 --port 8000 --reload
+    With WebSocket Support (Recommended)
+        uvicorn collab_editor.asgi:application --host 127.0.0.1 --port 8000 --reload
 
 🌐 **Key Routes**
       Feature	Path
